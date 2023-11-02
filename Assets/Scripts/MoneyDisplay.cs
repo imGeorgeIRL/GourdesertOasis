@@ -12,6 +12,14 @@ public class MoneyDisplay : MonoBehaviour
     private void Update()
     {
         // Update the displayed money value based on the player's money variable
-        moneyText.text = MoneyManager.instance.playerMoney.ToString("0");
+
+        if (MoneyManager.instance.playerMoney % 1.0f == 0.0f)
+        {
+            moneyText.text = MoneyManager.instance.playerMoney.ToString();
+        }
+        else
+        {
+            moneyText.text = MoneyManager.instance.playerMoney.ToString("F2");
+        }
     }
 }
