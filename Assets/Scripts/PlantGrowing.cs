@@ -64,7 +64,7 @@ public class PlantGrowing : MonoBehaviour
         switch (plantName)
         {
             case "Pumpkin":
-                baseValue = 100000;
+                baseValue = 10;
                 timeToNextGrowth = 5f;
                 minGrowthTime = 5f;
                 maxGrowthTime = 10f;

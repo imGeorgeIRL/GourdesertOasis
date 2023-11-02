@@ -20,11 +20,11 @@ public class MoneyManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            playerMoney += 5000;
-        }
-    }
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.M))
+    //    {
+    //        playerMoney += 5000;
+    //    }
+    //}
 }
