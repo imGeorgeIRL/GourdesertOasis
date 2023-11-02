@@ -6,39 +6,54 @@ using UnityEngine.UI;
 
 public class PlantGrowing : MonoBehaviour
 {
+    [Header("Arrays")]
     public GameObject[] plantStates;
-    public GameObject[] fences;
+    public GameObject wireFence, woodenFence, stoneFence, hedgeFence;
+    public GameObject wireFence2, woodenFence2, stoneFence2, hedgeFence2;
 
+
+    [Header("Plant Name")]
     [SerializeField] private string plantName;
+
+    [Header("UI")]
     public GameObject uiPanel; // Reference to the UI panel
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI upgradeCostText;
     public TextMeshProUGUI priceValueText;
-    //money multiplier...
-    //growth time multiplier
+    private LandInteraction landInteraction;
 
+    private float cropValue;
+
+    public ParticleSystem particles;
+    private bool particlePlayed;
+
+    
     private float baseValue;
     private float baseGrowthSpeed;
 
-    private bool uiPanelActive = false;
+    public bool uiPanelActive = false;
 
     private int currentState = 0; // 0 represents the seed state
-    public int upgradeLevel = 0;
+
+    private int upgradeLevel = 0;
 
     private float timeSinceLastGrowth = 0f;
     private float timeToNextGrowth = 5f; // Time in seconds for each growth stage
 
     private float valueModifier;
 
-    private float upgradeCost; // Cost of the next upgrade
-    public float initialUpgradeCost = 10f; // Initial cost for the first upgrade
-    public float upgradeCostIncrease = 5f; // Cost increase per upgrade level
+    public float upgradeCost; // Cost of the next upgrade
+
+
+    private float initialUpgradeCost = 10f; // Initial cost for the first upgrade
+    private float upgradeCostIncrease = 5f; // Cost increase per upgrade level
 
     private float minGrowthTime;
     private float maxGrowthTime;
 
     void Start()
     {
+        landInteraction = GetComponent<LandInteraction>();
         SetPlantState(currentState);
 
         if (uiPanel != null)
@@ -49,7 +64,7 @@ public class PlantGrowing : MonoBehaviour
         switch (plantName)
         {
             case "Pumpkin":
-                baseValue = 1000;
+                baseValue = 10;
                 timeToNextGrowth = 5f;
                 minGrowthTime = 5f;
                 maxGrowthTime = 10f;
@@ -57,7 +72,7 @@ public class PlantGrowing : MonoBehaviour
                 valueModifier = 1f;
                 break;
             case "Butternut":
-                baseValue = 1.25f;
+                baseValue = 15f;
                 timeToNextGrowth = 5f;
                 minGrowthTime = 10f;
                 maxGrowthTime = 15f;
@@ -65,7 +80,7 @@ public class PlantGrowing : MonoBehaviour
                 valueModifier = 1f;
                 break;
             case "Zucchini":
-                baseValue = 1.75f;
+                baseValue = 25f;
                 timeToNextGrowth = 5f;
                 minGrowthTime = 15f;
                 maxGrowthTime = 20f;
@@ -73,7 +88,7 @@ public class PlantGrowing : MonoBehaviour
                 valueModifier = 1f;
                 break;
             case "Watermelon":
-                baseValue = 2.5f;
+                baseValue = 40f;
                 timeToNextGrowth = 5f;
                 minGrowthTime = 20f;
                 maxGrowthTime = 25f;
@@ -89,12 +104,14 @@ public class PlantGrowing : MonoBehaviour
 
         ApplyUpgrades();
 
-        priceValueText.text = "$" + (baseValue * valueModifier);
+        
     }
 
 
     void Update()
     {
+        priceValueText.text = "$" + baseValue * valueModifier;
+
         // Check if it's time to grow to the next state
         timeSinceLastGrowth += Time.deltaTime;
 
@@ -104,11 +121,26 @@ public class PlantGrowing : MonoBehaviour
             SetPlantState(currentState);
             timeSinceLastGrowth = 0f;
             timeToNextGrowth = Random.Range(minGrowthTime, maxGrowthTime);
+            if (currentState == plantStates.Length -1 && !particlePlayed)
+            {
+                particles.Play();
+                particlePlayed = true;
+            }
         }
 
-        if (uiPanelActive && Input.GetKeyDown(KeyCode.Escape))
+        if (MoneyManager.uiActive)
         {
-            uiPanelActive = false;
+            landInteraction.enabled = false;
+        }
+        else if (!MoneyManager.uiActive)
+        {
+            landInteraction.enabled = true;
+        }
+
+        if (MoneyManager.uiActive && Input.GetKeyDown(KeyCode.Escape)) // -------------------- UI DEACTIVATION
+        {
+            MoneyManager.uiActive = false;
+
             uiPanel.SetActive(false);
         }
 
@@ -127,25 +159,29 @@ public class PlantGrowing : MonoBehaviour
         switch (upgradeLevel)
         {
             case 0:
-                foreach (GameObject fence in fences)
-                {
-                    fence.SetActive(false);
-                }
+                
                 break;
             case 25:
-                fences[0].SetActive(true);
+                wireFence.SetActive(true);
+                wireFence2.SetActive(true);
                 break;
             case 50:
-                fences[1].SetActive(true);
-                fences[0].SetActive(false);
+                woodenFence.SetActive(true);
+                woodenFence2.SetActive(true);
+                wireFence.SetActive(false);
+                wireFence2.SetActive(false);
                 break;
             case 75:
-                fences[1].SetActive(false);
-                fences[2].SetActive(true);
+                woodenFence.SetActive(false);
+                woodenFence2.SetActive(false);
+                stoneFence.SetActive(true);
+                stoneFence2.SetActive(true);
                 break;
             case 100:
-                fences[2].SetActive(false);
-                fences[3].SetActive(true);
+                stoneFence.SetActive(false);
+                stoneFence2.SetActive(false);
+                hedgeFence.SetActive(true);
+                hedgeFence2.SetActive(true);
                 break;
                 default: break;
         }
@@ -173,6 +209,7 @@ public class PlantGrowing : MonoBehaviour
 
                 upgradeLevel++;
                 ApplyUpgrades();
+                Debug.Log("Upgrade level is now " + upgradeLevel);
 
                 // Check if the current level is a multiple of 25
                 if ((upgradeLevel + 1) % 25 == 0)
@@ -187,7 +224,7 @@ public class PlantGrowing : MonoBehaviour
                 }
 
                 upgradeCostIncrease *= 1.1f;
-                valueModifier *= 1.1f;
+                valueModifier *= 1.05f;
                 Debug.Log("Value Modifier is now: " + valueModifier);
                 Debug.Log("Upgrade Cost Increase is now: " + upgradeCostIncrease);
             }
@@ -213,7 +250,7 @@ public class PlantGrowing : MonoBehaviour
 
             timeSinceLastGrowth = 0f;
 
-            
+            particlePlayed = false;
 
             // Calculate and add money to the player's total
             float moneyEarned = baseValue * valueModifier;
@@ -222,11 +259,11 @@ public class PlantGrowing : MonoBehaviour
         }
         else
         {
-            // Plant is not fully grown, show the UI panel
-            if (!uiPanelActive)
+            
+            if (!MoneyManager.uiActive) //----------------------------- UI ACTIVATION HERE
             {
                 uiPanel.SetActive(true);
-                uiPanelActive = true;
+                MoneyManager.uiActive = true;
             }
         }
     }
@@ -234,7 +271,7 @@ public class PlantGrowing : MonoBehaviour
     public void CloseUI()
     {
         uiPanel.SetActive(false);
-        uiPanelActive = false;
+        MoneyManager.uiActive = false;
         Debug.Log("X button pressed");
     }
 

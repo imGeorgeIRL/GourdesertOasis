@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public class MoneyManager : MonoBehaviour
@@ -6,7 +7,7 @@ public class MoneyManager : MonoBehaviour
 
     public float playerMoney = 0; // The player's total money
 
-
+    public static bool uiActive = false;
     private void Awake()
     {
         if (instance == null)

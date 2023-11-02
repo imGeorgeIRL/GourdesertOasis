@@ -4,7 +4,8 @@ using UnityEngine.UI;
 public class LevelSlider : MonoBehaviour
 {
     private Slider slider; // Reference to the UI Slider
-    
+
+    public PlantGrowing plantGrowing;
 
     
 
@@ -24,7 +25,10 @@ public class LevelSlider : MonoBehaviour
 
     public void IncreaseSlider()
     {
-        slider.value++;
+        if (MoneyManager.instance.playerMoney > plantGrowing.upgradeCost)
+        {
+            slider.value++;
+        }
     }
 
 }
