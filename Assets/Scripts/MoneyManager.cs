@@ -19,4 +19,12 @@ public class MoneyManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            playerMoney += 5000;
+        }
+    }
 }

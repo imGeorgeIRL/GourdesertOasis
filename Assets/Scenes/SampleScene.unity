@@ -479,7 +479,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 7
-  m_Sprite: {fileID: 21300000, guid: b77c9e7e7f1a72a40b2ced7e8eb8e2d8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4cfae1372a4664f44b17130224651bc1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -941,7 +941,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 7
-  m_Sprite: {fileID: 21300000, guid: b77c9e7e7f1a72a40b2ced7e8eb8e2d8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4cfae1372a4664f44b17130224651bc1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1794,7 +1794,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 861ef0e717805114aab59d76a01b9585, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forSaleSign: {fileID: 1819262449}
+  forSaleSign: {fileID: 28980902}
   plantStates: {fileID: 321414020}
   purchasePanel: {fileID: 894111348}
   beenPurchased: 0
@@ -7009,10 +7009,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 514544247}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 200628459}
+        m_TargetAssemblyTypeName: CowInteractions, Assembly-CSharp
+        m_MethodName: uiInactive
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -7568,7 +7568,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 7
-  m_Sprite: {fileID: 21300000, guid: b77c9e7e7f1a72a40b2ced7e8eb8e2d8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4cfae1372a4664f44b17130224651bc1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -8714,7 +8714,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 7
-  m_Sprite: {fileID: 21300000, guid: b77c9e7e7f1a72a40b2ced7e8eb8e2d8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4cfae1372a4664f44b17130224651bc1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -30136,7 +30136,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1943581963}
         m_TargetAssemblyTypeName: LandInteraction, Assembly-CSharp
-        m_MethodName: Purchasing
+        m_MethodName: DoPurchase
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -33669,7 +33669,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 7
-  m_Sprite: {fileID: 21300000, guid: b77c9e7e7f1a72a40b2ced7e8eb8e2d8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4cfae1372a4664f44b17130224651bc1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -51562,7 +51562,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 7
-  m_Sprite: {fileID: 21300000, guid: b77c9e7e7f1a72a40b2ced7e8eb8e2d8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4cfae1372a4664f44b17130224651bc1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -56312,7 +56312,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 7
-  m_Sprite: {fileID: 21300000, guid: b77c9e7e7f1a72a40b2ced7e8eb8e2d8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4cfae1372a4664f44b17130224651bc1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -58185,7 +58185,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 7
-  m_Sprite: {fileID: 21300000, guid: b77c9e7e7f1a72a40b2ced7e8eb8e2d8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4cfae1372a4664f44b17130224651bc1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

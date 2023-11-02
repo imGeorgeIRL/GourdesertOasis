@@ -7,18 +7,21 @@ public class LandInteraction : MonoBehaviour
 
     public GameObject forSaleSign;
     public GameObject plantStates;
-    //private bool panelActive = false; // To track if the UI panel is active
 
     private PlantGrowing plantGrowing;
 
     public GameObject purchasePanel;
+    private GameObject thisGameObject;
 
-    public bool beenPurchased;
+
+
+    [SerializeField] private bool beenPurchased;
 
     private void Start()
     {
         // Make sure the UI panel is initially inactive
 
+        thisGameObject = gameObject;
 
         plantGrowing = GetComponent<PlantGrowing>();
     }
@@ -31,7 +34,7 @@ public class LandInteraction : MonoBehaviour
             plantStates.SetActive(false);
             forSaleSign.SetActive(true);
         }
-        else
+        else if (beenPurchased)
         {
             plantGrowing.enabled = true;
             plantStates.SetActive(true);
@@ -41,52 +44,75 @@ public class LandInteraction : MonoBehaviour
         // Check for mouse click
         if (Input.GetMouseButtonDown(0)) // Left mouse button click
         {
-            
-                if (!MoneyManager.uiActive)
+
+            if (!MoneyManager.uiActive)
+            {
+                // Convert the mouse position to world coordinates in 2D space
+                Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+                // Check if the mouse click is over the sprite
+                Collider2D hitCollider = Physics2D.OverlapPoint(mousePosition);
+
+                if (hitCollider != null && hitCollider.gameObject == thisGameObject)
                 {
-                    // Convert the mouse position to world coordinates in 2D space
-                    Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-                    // Check if the mouse click is over the sprite
-                    Collider2D hitCollider = Physics2D.OverlapPoint(mousePosition);
-
-                    if (hitCollider != null && hitCollider.gameObject == gameObject)
+                    if (beenPurchased)
                     {
-                        if (beenPurchased) 
-                        { 
-                            plantGrowing.ResetPlant();
-                        }
-                        else
-                        {
-                            purchasePanel.SetActive(true);
-                            MoneyManager.uiActive = true;
-                        }
+                        plantGrowing.ResetPlant();
+                    }
+                    else
+                    {
+                        PurchasePlant(thisGameObject);
+                    }
                 }
 
-                }
-            
-                //if (!MoneyManager.uiActive)
-                //{
-                //    purchasePanel.SetActive(true);
-                //    MoneyManager.uiActive = true;
-                //}
-            
+            }
+          
+
         }
     }
 
-    public void Purchasing()
+    private void HandleHover()
+    {
+        if (!beenPurchased)
+        {
+            // Convert the mouse position to world coordinates in 2D space
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            // Check if the mouse position is over the sprite
+            Collider2D hitCollider = Physics2D.OverlapPoint(mousePosition);
+
+            if (hitCollider != null && hitCollider.gameObject == gameObject)
+            {
+                forSaleSign.SetActive(true);
+            }
+            else
+            {
+                forSaleSign.SetActive(false);
+            }
+        }
+    }
+
+
+    public void DoPurchase()
+    {
+        PurchasePlant(thisGameObject);
+    }
+
+
+    public void PurchasePlant(GameObject plant)
     {
         if (MoneyManager.instance.playerMoney >= 10000)
         {
             MoneyManager.instance.playerMoney -= 10000;
             beenPurchased = true;
+            plantGrowing.enabled = true;
+            plantStates.SetActive(true);
+            forSaleSign.SetActive(false);
+            purchasePanel.SetActive(false);
+            MoneyManager.uiActive = false;
         }
     }
 
-    public void uiInactive()
-    {
-        MoneyManager.uiActive = false;
-    }
 
 }
 
